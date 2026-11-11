@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +24,7 @@ function startSimulator() {
 
   const payload = {
     type: 'redirect',
-    url: 'javascript:alert(document.cookie)'
+    url: 'javascript:prompt(document.domain)'
   };
 
   if (interval) clearInterval(interval);
